@@ -1,0 +1,75 @@
+create table drivers(
+	driverID integer primary key,
+	name text,
+	dateLicense date,
+	address text,
+	city text);
+
+create table vehicleOwner(
+	driverID integer,
+	vehicleID integer);
+
+create table vehicles(
+	vehicleID integer primary key,
+	chassiNr text,
+	make text,
+	vehicleValue integer,
+	registrationYear integer);
+
+	
+create table insurance(
+	insuranceID int,
+	vehicleID int,
+	driverID int,
+	insuranceType varchar(50),
+	Dname varchar(100),
+	start_date date,
+	expiry_date date);
+	
+alter table insurance add constraint PK_insuranceID primary key (insuranceID);
+	
+alter table insurance alter column Dname set not null;
+
+alter table insurance add constraint FK_vehicleID foreign key (vehicleID) references vehicles(vehicleID);
+alter table insurance add constraint FK_driverID foreign key (driverID) references drivers(driverID);
+
+alter table insurance add constraint CHECK_insuranceType check (insuranceType in ('basic', 'intermediate', 'full'));
+
+
+insert into insurance values(1, 1, 1, 'basic', 'dname', now(), now());
+insert into insurance values(2, 2, 1, 'basic', 'dname', now(), now());
+insert into insurance values(3, 3, 1, 'basic', 'dname', now(), now());
+
+alter table insurance add column insuranceCompany varchar(100);
+
+create index idx_insurance on insurance(insuranceID);
+
+
+create role InsuranceAgent;
+create user John role InsuranceAgent;
+create user Alice role InsuranceAgent;
+create user Bob role InsuranceAgent;
+grant create on schema public to InsuranceAgent;
+
+
+insert into drivers values(1, 'ray', now(), '37 g', 'rh');
+insert into drivers values(2, 'tm', now(), '38 g', 'rh');
+insert into drivers values(3, 'sl', now(), '39 g', 'rh');
+
+insert into vehicles values(1, 'c1', 'Renault', 100, 2001);
+insert into vehicles values(2, 'c2', 'Renault', 200, 2002);
+insert into vehicles values(3, 'c3', 'Renault', 300, 2003);
+
+insert into vehicles values(4, 'c1', 'BMW', 100, 2001);
+insert into vehicles values(5, 'c2', 'MD', 200, 2002);
+insert into vehicles values(6, 'c3', 'TD', 300, 2003);
+insert into vehicles values(7, 'c1', 'BMW', 400, 2001);
+insert into vehicles values(8, 'c2', 'MD', 500, 2002);
+insert into vehicles values(9, 'c3', 'TD', 600, 2003);
+
+select * from vehicles where vehicleValue > (
+	select max(vehicleValue) from vehicles where make = 'Renault'
+);
+
+
+
