@@ -18,8 +18,8 @@ import com.timlin.demo.hotelchain.entity.Hotel;
 import com.timlin.demo.hotelchain.entity.HotelBrand;
 import com.timlin.demo.hotelchain.entity.Office;
 import com.timlin.demo.hotelchain.entity.Room;
+import com.timlin.demo.hotelchain.entity.Login;
 import com.timlin.demo.hotelchain.service.ApiService;
-
 
 @RestController
 public class ApiController {
@@ -148,4 +148,10 @@ public class ApiController {
     	booking.setTimeStamp(new Date());
         return apiService.newBooking(booking);
     }
+    
+    @PostMapping(value="/api/login")
+    public Customer doLogin(@RequestBody Login login) {
+    	return apiService.getLoginCustomer(login);
+    }
+    
 }

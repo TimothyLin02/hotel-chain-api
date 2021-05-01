@@ -7,7 +7,6 @@ public class Customer implements Serializable {
 
 	private Integer custID;
 	private Integer brandId;
-	
 	private String firstName;
 	private String lastName;
 	private String address;

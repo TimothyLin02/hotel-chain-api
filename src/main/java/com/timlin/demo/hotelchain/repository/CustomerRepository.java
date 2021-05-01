@@ -14,6 +14,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import com.timlin.demo.hotelchain.entity.Customer;
+import com.timlin.demo.hotelchain.entity.Login;
 
 @Repository
 public class CustomerRepository 
@@ -54,7 +55,7 @@ public class CustomerRepository
 		}
 		return lst.get(0);
 	}
-
+	
 	public Customer save(Customer customer) {
         return null;
 	}
@@ -85,5 +86,17 @@ public class CustomerRepository
 
 	    customer.setCustID(keyHolder.getKey().intValue());
 	    return customer;
+	}
+	
+	public Customer findByUsernameAndPassword(Login login) {
+		List<Customer> lst = jdbcTemplate.query(
+                "select * from customer where user_name = ? and password = ?",
+                new Object[]{login.getUserName(), login.getPassword()},
+                new int[] {Types.VARCHAR, Types.VARCHAR},
+                mapper);
+		if (lst == null || lst.isEmpty()) {
+			return null;
+		}
+		return lst.get(0);
 	}
 }

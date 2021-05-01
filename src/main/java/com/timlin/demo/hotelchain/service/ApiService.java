@@ -12,6 +12,7 @@ import com.timlin.demo.hotelchain.entity.Hotel;
 import com.timlin.demo.hotelchain.entity.HotelBrand;
 import com.timlin.demo.hotelchain.entity.Office;
 import com.timlin.demo.hotelchain.entity.Room;
+import com.timlin.demo.hotelchain.entity.Login;
 
 public interface ApiService {
 
@@ -48,7 +49,12 @@ public interface ApiService {
 	public List<Amenity> getAmenities();
 
 	public Booking getLatestBooking(Integer id);
+	
 	public Booking getBooking(Integer id, String state);
+	
 	public List<Booking> getBookings(Integer id);
+	
 	public List<Booking> getBookings();
+	
+	public Customer getLoginCustomer(Login login);
 }

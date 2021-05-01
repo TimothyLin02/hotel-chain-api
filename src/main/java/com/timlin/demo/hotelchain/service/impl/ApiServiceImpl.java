@@ -19,6 +19,7 @@ import com.timlin.demo.hotelchain.entity.Hotel;
 import com.timlin.demo.hotelchain.entity.HotelBrand;
 import com.timlin.demo.hotelchain.entity.Office;
 import com.timlin.demo.hotelchain.entity.Room;
+import com.timlin.demo.hotelchain.entity.Login;
 import com.timlin.demo.hotelchain.repository.AmenityRepository;
 import com.timlin.demo.hotelchain.repository.BookedAmenityRepository;
 import com.timlin.demo.hotelchain.repository.BookedRoomRepository;
@@ -242,5 +243,9 @@ public class ApiServiceImpl implements ApiService {
 			}
 		});
 		return bookings.get(0);
+	}
+	
+	public Customer getLoginCustomer(Login login) {
+		return customerRepository.findByUsernameAndPassword(login);
 	}
 }
